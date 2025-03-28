@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { database } from "../firebase";
 import { ref, set } from "firebase/database";
 import dictionary from "../../dictionary.json";
+import "./Master.css";
 
 export default function Master() {
   const [wordsLeft, setWordsLeft] = useState(Object.keys(dictionary));
@@ -61,25 +62,28 @@ export default function Master() {
   };
 
   return (
-    <div>
-      <h1>Seleccion de palabras</h1>
+    <div className="masterContainer">
+      <h1 className="masterTitle">Seleccion de palabras</h1>
 
       {currentWord && (
-        <div>
-          <h2>{currentWord.word}</h2>
-          <p>{currentWord.definition}</p>
+        <div className="wordCard">
+          <h2 className="wordTitle">{currentWord.word}</h2>
+          <p className="wordDefinition">{currentWord.definition}</p>
         </div>
       )}
 
-      <button onClick={getRandomWord}>Obtener Palabra</button>
-      <button onClick={sendMessage}>Enviar palabra</button>
-      <button onClick={restart}>Restart</button>
+      <div className="buttonContainer">
+        <button className="actionButton getWordButton" onClick={getRandomWord}>Obtener Palabra</button>
+        <button className="actionButton sendWordButton" onClick={sendMessage}>Enviar palabra</button>
+        <button className="actionButton restartButton" onClick={restart}>Restart</button>
+      </div>
 
-      <h2>Palabras enviadas:</h2>
-      <ul>
+      <h2 className="sentWordsTitle">Palabras enviadas:</h2>
+      <ul className="sentWordsList">
         {sentWords.map((wordObj, index) => (
-          <li key={index}>
-            <strong>{wordObj.word}:</strong> {wordObj.definition}
+          <li key={index} className="sentWordItem">
+            <strong className="sentWordName">{wordObj.word}:</strong> 
+            <span className="sentWordDefinition">{wordObj.definition}</span>
           </li>
         ))}
       </ul>

@@ -21,8 +21,9 @@ function App() {
   return(
     <div className="backApp">
     <div className="box">
-      <h1>Nombre</h1>
+      <h1>Bingo biologico!!</h1>
       <input
+      placeholder="Nombre"
         value={name}
         onChange={(e) => setName(e.target.value)}
       />

@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import App from './App.jsx'
 import Game from "./pages/Game.jsx";
 import Master from "./pages/Master.jsx";
+import Won from "./pages/Won.jsx";
 
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>
@@ -10,6 +11,7 @@ createRoot(document.getElementById('root')).render(
       <Route path="/" element={<App />} />
       <Route path="/game" element={<Game/>}/>
       <Route path="/master" element={<Master/>}/>
+      <Route path="/won" element={<Won/>}/>
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   </BrowserRouter>

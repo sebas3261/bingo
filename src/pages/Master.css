@@ -1,0 +1,251 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .masterContainer {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #1b4332, #2d6a4f);
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+  }
+  
+  .masterTitle {
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #d8f3dc;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    position: relative;
+    padding-bottom: 15px;
+  }
+  
+  .masterTitle::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(90deg, #99d98c, #76c893);
+    border-radius: 2px;
+  }
+  
+  .sentWordsTitle {
+    margin: 25px 0 15px;
+    font-size: 1.8rem;
+    color: #b7e4c7;
+  }
+  
+  /* Current word container */
+  .wordCard {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 25px;
+    margin: 20px 0;
+    width: 80%;
+    max-width: 600px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    transition: all 0.3s ease;
+  }
+  
+  .wordCard:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+  }
+  
+  .wordTitle {
+    color: #d8f3dc;
+    font-size: 2.2rem;
+    margin-top: 0;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+  }
+  
+  .wordDefinition {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: #fff;
+    margin: 0;
+  }
+  
+  /* Buttons container */
+  .buttonContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    margin: 20px 0;
+  }
+  
+  .actionButton {
+    margin: 5px;
+    padding: 15px 25px;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  }
+  
+  .getWordButton {
+    background-color: #95d5b2;
+    color: #1b4332;
+  }
+  
+  .getWordButton:hover {
+    background-color: #74c69d;
+    transform: translateY(-3px);
+  }
+  
+  .sendWordButton {
+    background-color: #d8f3dc;
+    color: #1b4332;
+  }
+  
+  .sendWordButton:hover {
+    background-color: #b7e4c7;
+    transform: translateY(-3px);
+  }
+  
+  .restartButton {
+    background-color: #e63946;
+    color: white;
+  }
+  
+  .restartButton:hover {
+    background-color: #d62828;
+    transform: translateY(-3px);
+  }
+  
+  /* Sent words list */
+  .sentWordsList {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 20px 40px;
+    margin: 20px 0;
+    width: 80%;
+    max-width: 600px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    max-height: 300px;
+    overflow-y: auto;
+    list-style-type: none;
+  }
+  
+  .sentWordsList::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .sentWordsList::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+  }
+  
+  .sentWordsList::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+  }
+  
+  .sentWordsList::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5);
+  }
+  
+  .sentWordItem {
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    line-height: 1.5;
+  }
+  
+  .sentWordItem:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+  
+  .sentWordName {
+    color: #95d5b2;
+    font-size: 1.1rem;
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .sentWordDefinition {
+    color: #f1faee;
+  }
+  
+  /* Empty state for word list */
+  .sentWordsList:empty::after {
+    content: "No hay palabras enviadas aún";
+    display: block;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.6);
+    font-style: italic;
+    padding: 20px 0;
+  }
+  
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .masterContainer {
+      padding: 20px;
+    }
+    
+    .masterTitle {
+      font-size: 2rem;
+    }
+    
+    .wordCard {
+      width: 90%;
+    }
+    
+    .wordTitle {
+      font-size: 1.8rem;
+    }
+    
+    .sentWordsList {
+      width: 90%;
+      padding: 15px 25px;
+    }
+    
+    .actionButton {
+      padding: 12px 20px;
+      font-size: 1rem;
+    }
+    
+    .buttonContainer {
+      flex-direction: column;
+      width: 80%;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .masterTitle {
+      font-size: 1.8rem;
+    }
+    
+    .wordTitle {
+      font-size: 1.5rem;
+    }
+    
+    .wordDefinition {
+      font-size: 1rem;
+    }
+    
+    .buttonContainer {
+      width: 100%;
+    }
+  }

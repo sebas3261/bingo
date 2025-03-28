@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { database } from "../firebase";
 import { ref, onValue, set } from "firebase/database";
 import dictionary from "../../dictionary.json";
+import { useNavigate } from "react-router";
 import "./Game.css"
 
 export default function Game() {
@@ -10,6 +11,7 @@ export default function Game() {
   const [gameOver, setGameOver] = useState(false);
   const [name, setName] = useState("");
   const [selectedWords, setSelectedWords] = useState([]);
+  const navigate = useNavigate();
 
   const toggleSelected = (word) => {
     setSelectedWords((prev) =>
@@ -76,8 +78,10 @@ export default function Game() {
     );
 
     if (allWordsSent) {
+        set(ref(database, "gameOver"), true); 
+        navigate("/won");
         alert("¡BINGO! El juego ha terminado.");
-        set(ref(database, "gameOver"), true); // Guarda en Firebase que el juego terminó
+        
     } else {
         alert("Aún no tienes Bingo. Sigue esperando palabras.");
     }

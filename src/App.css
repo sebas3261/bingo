@@ -2,36 +2,105 @@
     padding: 0;
     margin: 0;
 }
-
-html, #root, body{
-    height: 100%;
+.backApp {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #76c893, #52b69a);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.backApp{
-    width: 100%;
-    min-height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-image: url('./assets/back.jpg');
-    background-size: cover; /* Para que la imagen cubra todo el div */
-            background-position: center; 
+.box {
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  width: 90%;
+  max-width: 500px;
+  transition: transform 0.3s ease;
+  margin: 20px;
 }
 
-.box{
-    border: black solid 1px;
-    padding: 20px;
-    border-radius: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: white;
+.box:hover {
+  transform: translateY(-5px);
 }
 
-.sendApp{
-    border: 1px solid black;
-    margin-top: 5px;
-    padding: 5px 15px;
-    border-radius: 20px;
+h1 {
+  color: #2d6a4f;
+  margin-bottom: 30px;
+  font-size: 2.5rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+input {
+  width: 100%;
+  padding: 15px;
+  margin-bottom: 25px;
+  border: 2px solid #99d98c;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  outline: none;
+  transition: border-color 0.3s;
+  box-sizing: border-box;
+}
+
+input:focus {
+  border-color: #52b69a;
+  box-shadow: 0 0 8px rgba(82, 182, 154, 0.5);
+}
+
+input::placeholder {
+  color: #adb5bd;
+}
+
+.sendApp {
+  background-color: #2d6a4f;
+  color: white;
+  padding: 15px 30px;
+  border-radius: 10px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-block;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.sendApp:hover {
+  background-color: #1b4332;
+  transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Add some biological-themed decorative elements */
+.box::before {
+  content: "🌿";
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 2rem;
+  opacity: 0.5;
+}
+
+.box::after {
+  content: "🌱";
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  font-size: 2rem;
+  opacity: 0.5;
+}
+
+/* Make it responsive */
+@media (max-width: 600px) {
+  .box {
+    padding: 30px 20px;
+  }
+  
+  h1 {
+    font-size: 2rem;
+  }
 }
