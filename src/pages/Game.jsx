@@ -130,7 +130,7 @@ export default function Game() {
                 }`}
                 onClick={() => toggleSelected(item.word)}
               >
-                {item.word}
+                {item.definition}
               </div>
             ))}
           </div>
