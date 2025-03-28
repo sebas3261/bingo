@@ -38,15 +38,15 @@ export default function Master() {
       alert("Ya no hay más palabras disponibles.");
       return;
     }
-
+  
     const randomIndex = Math.floor(Math.random() * wordsLeft.length);
     const selectedWord = wordsLeft[randomIndex];
-
-    // Filtramos para eliminar la palabra seleccionada
-    setWordsLeft(wordsLeft.filter((word) => word !== selectedWord));
-
+  
+    setWordsLeft((prevWords) => prevWords.filter((word) => word !== selectedWord));
+  
     setCurrentWord({ word: selectedWord, definition: dictionary[selectedWord] });
   }
+  
 
   const restart = () => {
     // Reiniciar Firebase
