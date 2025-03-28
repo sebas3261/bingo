@@ -35,7 +35,7 @@ export default function Game() {
         } else {
           setWordsReceived((prev) => [
             ...prev,
-            { word: data.word, definition: data.definition }
+            { word: data.text, definition: data.definition }
           ]);
         }
       }
@@ -103,7 +103,7 @@ export default function Game() {
         <h2>🚨 El juego ha terminado. 🚨</h2>
       ) : (
         <>
-          <h2>Última palabra recibida:</h2>
+          <h2>Última definicion recibida:</h2>
           {wordsReceived.length > 0 ? (
             <div>
               <strong>{wordsReceived[wordsReceived.length - 1].word}</strong>
@@ -112,7 +112,7 @@ export default function Game() {
             <p>Esperando...</p>
           )}
 
-          <h2>Definiciones aleatorias:</h2>
+          <h2>DPalabras aleatorias:</h2>
           <div className="cardContainer">
           {randomWords.map((item, index) => (
         <div
@@ -120,7 +120,7 @@ export default function Game() {
           className={`card ${selectedWords.includes(item.word) ? "selected" : ""}`}
           onClick={() => toggleSelected(item.word)}
         >
-          {item.definition}
+          {item.word}
         </div>
       ))}
           </div>
