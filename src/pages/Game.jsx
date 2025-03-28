@@ -105,6 +105,10 @@ export default function Game() {
     alert("¡El juego se ha reiniciado!");
   }
 
+  function getWordFromDefinition(definition) {
+    return Object.keys(dictionary).find(word => dictionary[word] === definition);
+  }
+
   return (
     <div className="backGame">
       {gameOver ? (
@@ -130,7 +134,7 @@ export default function Game() {
                 }`}
                 onClick={() => toggleSelected(item.word)}
               >
-                {item.word}
+                {getWordFromDefinition(item.word)}
               </div>
             ))}
           </div>
