@@ -114,14 +114,13 @@ export default function Game() {
           <h2>Última palabra recibida:</h2>
           {wordsReceived.length > 0 ? (
             <div>
-              <strong>{wordsReceived[wordsReceived.length - 1].definition}</strong> 
-              {/* 🔹 Ahora mostramos la definición en vez de la palabra */}
+              <strong>{wordsReceived[wordsReceived.length - 1].word}</strong>
             </div>
           ) : (
             <p>Esperando...</p>
           )}
 
-          <h2>Definiciones aleatorias:</h2>
+          <h2>Palabras aleatorias:</h2>
           <div className="cardContainer">
             {randomWords.map((item, index) => (
               <div
@@ -131,7 +130,7 @@ export default function Game() {
                 }`}
                 onClick={() => toggleSelected(item.word)}
               >
-                {item.definition} {/* 🔹 Mostramos la definición en vez de la palabra */}
+                {item.word}
               </div>
             ))}
           </div>
