@@ -105,10 +105,6 @@ export default function Game() {
     alert("¡El juego se ha reiniciado!");
   }
 
-  function getWordFromDefinition(definition) {
-    return Object.keys(dictionary).find(word => dictionary[word] === definition);
-  }
-
   return (
     <div className="backGame">
       {gameOver ? (
@@ -118,13 +114,14 @@ export default function Game() {
           <h2>Última palabra recibida:</h2>
           {wordsReceived.length > 0 ? (
             <div>
-              <strong>{wordsReceived[wordsReceived.length - 1].word}</strong>
+              <strong>{wordsReceived[wordsReceived.length - 1].definition}</strong> 
+              {/* 🔹 Ahora mostramos la definición en vez de la palabra */}
             </div>
           ) : (
             <p>Esperando...</p>
           )}
 
-          <h2>Palabras aleatorias:</h2>
+          <h2>Definiciones aleatorias:</h2>
           <div className="cardContainer">
             {randomWords.map((item, index) => (
               <div
@@ -134,7 +131,7 @@ export default function Game() {
                 }`}
                 onClick={() => toggleSelected(item.word)}
               >
-                {getWordFromDefinition(item.word)}
+                {item.word} {/* 🔹 Mostramos la definición en vez de la palabra */}
               </div>
             ))}
           </div>
