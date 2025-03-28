@@ -1,41 +1,32 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
+import { database } from "../firebase";
+import { ref, onValue } from "firebase/database";
 
 export default function Game() {
-    const navigate = useNavigate();
-    const [name, setName] = useState("");
-    const [socket, setSocket] = useState(null);
-    const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState([]);
 
-    useEffect(() => {
-        const storedName = localStorage.getItem("nombre");
-        if (!storedName) {
-            navigate("/");
-            return;
-        }
-        setName(storedName);
-    }, []);
+  useEffect(() => {
+    const messagesRef = ref(database, "messages/latest");
 
-    useEffect(() => {
-        const ws = new WebSocket("ws://localhost:8080");
+    // Escuchar cambios en la base de datos
+    onValue(messagesRef, (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        setMessages((prev) => [...prev, data.text]);
+      }
+    });
 
-        ws.onopen = () => console.log("🟢 Conectado al WebSocket");
+    return () => {};
+  }, []);
 
-        ws.onmessage = async (event) => {
-            const text = await event.data.text(); // Convertir Blob a texto
-            console.log("📩 Mensaje recibido:", text);
-            setMessages((prev) => [...prev, text]);
-        };
-
-        setSocket(ws);
-
-        return () => ws.close();
-    }, []);
-
-    return (
-        <div>
-            <h1>Receptor - Hola {name}</h1>
-            {messages[messages.length - 1]}
-        </div>
-    );
+  return (
+    <div>
+      <h1>Receptor</h1>
+      <ul>
+        {messages.map((msg, index) => (
+          <li key={index}>{msg}</li>
+        ))}
+      </ul>
+    </div>
+  );
 }
