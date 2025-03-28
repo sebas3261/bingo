@@ -114,7 +114,8 @@ export default function Game() {
           <h2>Última palabra recibida:</h2>
           {wordsReceived.length > 0 ? (
             <div>
-              <strong>{wordsReceived[wordsReceived.length - 1].word}</strong>
+              <strong>{wordsReceived[wordsReceived.length - 1].definition}</strong> 
+              {/* 🔹 Ahora mostramos la definición en vez de la palabra */}
             </div>
           ) : (
             <p>Esperando...</p>
@@ -130,7 +131,7 @@ export default function Game() {
                 }`}
                 onClick={() => toggleSelected(item.word)}
               >
-                {item.definition}
+                {item.definition} {/* 🔹 Mostramos la definición en vez de la palabra */}
               </div>
             ))}
           </div>
