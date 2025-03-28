@@ -3,7 +3,7 @@ import { database } from "../firebase";
 import { ref, onValue, set } from "firebase/database";
 import dictionary from "../../dictionary.json";
 import { useNavigate } from "react-router";
-import "./Game.css"
+import "./Game.css";
 
 export default function Game() {
   const [wordsReceived, setWordsReceived] = useState([]); // Guarda palabras recibidas con su definición
@@ -21,35 +21,46 @@ export default function Game() {
     );
   };
 
-
   useEffect(() => {
     const messagesRef = ref(database, "messages/latest");
     const gameOverRef = ref(database, "gameOver");
-    setName(localStorage.getItem("nombre"))
+
+    setName(localStorage.getItem("nombre"));
+
     // Escuchar los mensajes de Firebase
-    onValue(messagesRef, (snapshot) => {
+    const unsubscribeMessages = onValue(messagesRef, (snapshot) => {
       const data = snapshot.val();
       if (data) {
         if (data.word === "restart") {
           resetGame(); // Si llega "restart", reinicia el juego
         } else {
-          setWordsReceived((prev) => [
-            ...prev,
-            { word: data.text, definition: data.definition }
-          ]);
+          // Buscar la palabra correspondiente a la definición recibida
+          const matchingWord = Object.keys(dictionary).find(
+            (word) => dictionary[word] === data.text
+          );
+
+          if (matchingWord) {
+            setWordsReceived((prev) => [
+              ...prev,
+              { word: matchingWord, definition: data.text }
+            ]);
+          }
         }
       }
     });
 
     // Escuchar si el juego terminó
-    onValue(gameOverRef, (snapshot) => {
-      const data = snapshot.val();
-      if (data === true) {
-        setGameOver(true);
-      }
+    const unsubscribeGameOver = onValue(gameOverRef, (snapshot) => {
+      setGameOver(snapshot.val() === true);
     });
 
     getRandomWords();
+
+    // Limpiar suscripciones al desmontar
+    return () => {
+      unsubscribeMessages();
+      unsubscribeGameOver();
+    };
   }, []);
 
   function getRandomWords() {
@@ -69,24 +80,22 @@ export default function Game() {
   }
 
   function checkBingo() {
-    console.log("🔹 Palabras en Bingo:", randomWords.map(w => w.word));
-    console.log("🔹 Palabras recibidas:", wordsReceived.map(w => w.word));
+    console.log("🔹 Palabras en Bingo:", randomWords.map((w) => w.word));
+    console.log("🔹 Palabras recibidas:", wordsReceived.map((w) => w.word));
 
     // Compara solo los nombres de las palabras
-    const allWordsSent = randomWords.every(item =>
-        wordsReceived.some(received => received.word === item.word)
+    const allWordsSent = randomWords.every((item) =>
+      wordsReceived.some((received) => received.word === item.word)
     );
 
     if (allWordsSent) {
-        set(ref(database, "gameOver"), true); 
-        navigate("/won");
-        alert("¡BINGO! El juego ha terminado.");
-        
+      set(ref(database, "gameOver"), true);
+      navigate("/won");
+      alert("¡BINGO! El juego ha terminado.");
     } else {
-        alert("Aún no tienes Bingo. Sigue esperando palabras.");
+      alert("Aún no tienes Bingo. Sigue esperando palabras.");
     }
-}
-
+  }
 
   function resetGame() {
     setWordsReceived([]); // Limpiar palabras recibidas
@@ -98,12 +107,11 @@ export default function Game() {
 
   return (
     <div className="backGame">
-
       {gameOver ? (
         <h2>🚨 El juego ha terminado. 🚨</h2>
       ) : (
         <>
-          <h2>Última definicion recibida:</h2>
+          <h2>Última palabra recibida:</h2>
           {wordsReceived.length > 0 ? (
             <div>
               <strong>{wordsReceived[wordsReceived.length - 1].word}</strong>
@@ -112,17 +120,19 @@ export default function Game() {
             <p>Esperando...</p>
           )}
 
-          <h2>Palabras aleatorias:</h2>
+          <h2>Definiciones aleatorias:</h2>
           <div className="cardContainer">
-          {randomWords.map((item, index) => (
-        <div
-          key={index}
-          className={`card ${selectedWords.includes(item.word) ? "selected" : ""}`}
-          onClick={() => toggleSelected(item.word)}
-        >
-          {item.word}
-        </div>
-      ))}
+            {randomWords.map((item, index) => (
+              <div
+                key={index}
+                className={`card ${
+                  selectedWords.includes(item.word) ? "selected" : ""
+                }`}
+                onClick={() => toggleSelected(item.word)}
+              >
+                {item.word}
+              </div>
+            ))}
           </div>
           <button onClick={checkBingo} disabled={gameOver} className="sendApp">
             Bingo
