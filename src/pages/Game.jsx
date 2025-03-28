@@ -112,7 +112,7 @@ export default function Game() {
             <p>Esperando...</p>
           )}
 
-          <h2>DPalabras aleatorias:</h2>
+          <h2>Palabras aleatorias:</h2>
           <div className="cardContainer">
           {randomWords.map((item, index) => (
         <div
