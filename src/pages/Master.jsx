@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { database } from "../firebase";
 import { ref, set } from "firebase/database";
 import dictionary from "../../dictionary.json";
@@ -8,6 +8,10 @@ export default function Master() {
   const [wordsLeft, setWordsLeft] = useState(Object.keys(dictionary));
   const [currentWord, setCurrentWord] = useState(null);
   const [sentWords, setSentWords] = useState([]); 
+
+  useEffect(() => {
+    getRandomWord()
+  }, []);
   
 
   const sendMessage = () => {
@@ -59,6 +63,7 @@ export default function Master() {
     setSentWords([]); // 🔹 Limpiar palabras enviadas
 
     console.log("Juego reiniciado");
+    getRandomWord()
   };
 
   return (
@@ -73,8 +78,7 @@ export default function Master() {
       )}
 
       <div className="buttonContainer">
-        <button className="actionButton getWordButton" onClick={getRandomWord}>Obtener Palabra</button>
-        <button className="actionButton sendWordButton" onClick={sendMessage}>Enviar palabra</button>
+        <button className="actionButton sendWordButton" onClick={()=>{getRandomWord();sendMessage()}}>Enviar palabra</button>
         <button className="actionButton restartButton" onClick={restart}>Restart</button>
       </div>
 
